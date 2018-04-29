@@ -20,19 +20,21 @@ class Leaderboard(Resource):
         con = lite.connect('RSI.db')
         with con:
             cur = con.cursor()
-            cur.execute('SELECT rowid, Username, Points, Gen_Points FROM User ORDER BY Gen_Points DESC LIMIT 10')
+            cur.execute('SELECT Username, Points, Gen_Points FROM User ORDER BY Gen_Points DESC LIMIT 10')
             rows = cur.fetchall()
 
         if rows == None:
             abort(400, message='No user found')
 
         leaderboard = []
+        int pos = 0
         for user in rows:
-            leaderboard.append({ '_id': user[0],
-                                 'id': str(user[0]),
-                                 'username': user[1],
-                                 'points': str(user[2]),
-                                 'general_points': str(user[3]) })
+            pos += 1
+            leaderboard.append({ '_id': pos,
+                                 'id': str(pos),
+                                 'username': user[0],
+                                 'points': str(user[1]),
+                                 'general_points': str(user[2]) })
         return leaderboard
 
 
