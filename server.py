@@ -29,7 +29,7 @@ class Leaderboard(Resource):
         leaderboard = []
         for user in rows:
             leaderboard.append({ '_id': user[0],
-                                 'id': str(user[0])
+                                 'id': str(user[0]),
                                  'username': user[1],
                                  'points': str(user[2]),
                                  'general_points': str(user[3]) })
