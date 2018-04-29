@@ -6,6 +6,7 @@ quiz_la2 = { 'text': 'Nel ciclismo, di che colore è la maglia del vincitore del
              'answers': ['Rosa', 'Gialla', 'Verde', 'Bianca'],
              'explanation': 'La scelta della maglia gialla viene fatta risalire al 1913',
              'correct': 2 }
+             #frank matana
 
 activeQuizzes = { 'la1': quiz_la1,
                  'la2': quiz_la2 }

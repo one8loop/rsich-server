@@ -2,6 +2,8 @@ import sqlite3 as lite
 import random as rnd
 import sys
 
+# users = 
+
 con = lite.connect('RSI.db')
 
 with con:

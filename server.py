@@ -28,7 +28,7 @@ class Leaderboard(Resource):
 
         leaderboard = []
         for user in rows:
-            leaderboard.append({ 'Username': user[0], 'Points': user[1], 'Gen_Points': user[2] })
+            leaderboard.append({ 'username': user[0], 'points': user[1], 'general_points': user[2] })
         return leaderboard
 
 
@@ -43,11 +43,11 @@ class User(Resource):
         if row == None:
             abort(400, message='User not found')
 
-        user = { 'Username': row[0],
-                 'Name': row[1],
-                 'Surname': row[2],
-                 'Points': row[3],
-                 'Gen_Points': row[4] }
+        user = { 'username': row[0],
+                 'name': row[1],
+                 'surname': row[2],
+                 'points': row[3],
+                 'general_points': row[4] }
 
         return user
 
