@@ -66,5 +66,5 @@ api.add_resource(Leaderboard, '/leaderboard')
 api.add_resource(User, '/user/<string:userId>')
 
 if __name__ == '__main__':
-    app.run(debug=False)
-    #app.run(host='0.0.0.0', debug=False) # To open to the network
+#    app.run(debug=False)
+    app.run(host='0.0.0.0', port=5689, debug=False) # To open to the network
