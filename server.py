@@ -27,11 +27,9 @@ class Leaderboard(Resource):
             abort(400, message='No user found')
 
         leaderboard = []
-        pos = 0
-        for user in rows:
-            pos += 1
-            leaderboard.append({ '_id': pos,
-                                 'id': str(pos),
+        for pos, user in zip(range(len(rows)), rows):
+            leaderboard.append({ '_id': pos+1,
+                                 'id': str(pos+1),
                                  'username': user[0],
                                  'points': str(user[1]),
                                  'general_points': str(user[2]) })
