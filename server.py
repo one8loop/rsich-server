@@ -27,7 +27,7 @@ class Leaderboard(Resource):
             abort(400, message='No user found')
 
         leaderboard = []
-        int pos = 0
+        pos = 0
         for user in rows:
             pos += 1
             leaderboard.append({ '_id': pos,
