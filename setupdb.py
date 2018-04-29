@@ -16,9 +16,21 @@ users = [ ['oneloop','Alessandro','Castiglioni',0,0],
           ['itscool','Name','Surname',0,0],
           ['schoolnei','Name','Surname',0,0] ]
 
+quizzes = [ ['la1',
+             'Dove sono nati i giochi Olimpici?',
+             'Italia', 'Sudafrica', 'Grecia', 'Spagna', 3],
+             ['la2',
+              'Nel ciclismo, di che colore è la maglia del vincitore del Tour de France?',
+              'Rosa', 'Gialla', 'Verde', 'Bianca', 2
+             ] ]
+
+polls = [ ['Il surriscaldamento globale rappresenta un problema immediato per la Svizzera?',
+           'Sì', 'No'] ]
+
 for user in users:
     user[3] = rnd.randint(0, 5000)
     user[4] = rnd.randint(0, 1500)
+
 
 con = lite.connect('RSI.db')
 
@@ -28,16 +40,11 @@ with con:
     cur.execute("DROP TABLE IF EXISTS User")
     cur.execute("CREATE TABLE User(Username TEXT UNIQUE, Name TEXT, Surname TEXT, Points INT, Gen_Points INT)")
     cur.executemany("INSERT INTO User VALUES(?, ?, ?, ?, ?)", users)
-    # cur.execute("INSERT INTO User VALUES('oneloop','Alessandro','Castiglioni',5264,1441)")
-    # cur.execute("INSERT INTO User VALUES('pdor','Davide','Molinelli',1056,562)")
-    # cur.execute("INSERT INTO User VALUES('kmer','Emanuele','Falzone',6537,300)")
-    # cur.execute("INSERT INTO User VALUES('assionito','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('crossie','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('latchip','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('cormin','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('lettwarz','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('saluatom','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('travere','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('dakertile','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('itscool','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
-    # cur.execute("INSERT INTO User VALUES('schoolnei','Name','Surname',?,?)",(rnd.randint(0, 5000),rnd.randint(0, 1500)))
+
+    cur.execute("DROP TABLE IF EXISTS Quiz")
+    cur.execute("CREATE TABLE Quiz(Network TEXT, Question TEXT, A1 TEXT, A2 TEXT, A3 TEXT, A4 TEXT, CorrectNo INT)")
+    cur.executemany("INSERT INTO Quiz VALUES(?, ?, ?, ?, ?, ?, ?)", quizzes)
+
+    cur.execute("DROP TABLE IF EXISTS Poll")
+    cur.execute("CREATE TABLE Poll(Question TEXT, A1 TEXT, A2 TEXT, CountA1 INT, CountA2 INT)")
+    cur.executemany("INSERT INTO Poll VALUES(?, ?, ?, 0, 0)", polls)

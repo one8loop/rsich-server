@@ -7,12 +7,38 @@ app = Flask(__name__)
 api = Api(app)
 
 userparser = reqparse.RequestParser()
-userparser.add_argument('givePoints', type=int, help='Adds free points to user')
+userparser.add_argument('givePoints', type=int)
+quizparser = reqparse.RequestParser()
+quizparser.add_argument('channel', type=str, required=True, help='You must specify channel argument (la1/la2)')
+quizparser.add_argument('getAnswersForId', type=int)
+quizparser.add_argument('getCorrectForId', type=int)
+quizparser.add_argument('getPoll', type=int)
 
 class Quiz(Resource):
-    def get(self, channel):
-        quiz = getQuiz(channel)
-        return quiz
+    def post(self):
+        args = quizparser.parse_args()
+        if args['getPoll'] == 1:
+            pass
+            # todo, prepare poll
+        else: # Quiz
+            if args['getAnswersForId'] != None:
+                response = getAnswersForId(args['getAnswersForId'])
+                if response == None:
+                    abort(400, message='Invalid question id')
+                return response
+            elif args['getCorrectForId'] != None:
+                response = getCorrectForId(args['getCorrectForId'])
+                if response == None:
+                    abort(400, message='Invalid question id')
+                return response
+            else:
+                response = getQuiz(args['channel'])
+                if response == None:
+                    abort(400, message='No questions available at the moment')
+                return response
+
+
+        return response
 
 
 class Leaderboard(Resource):
@@ -65,7 +91,7 @@ class User(Resource):
         return 'Accepted', 202
 
 
-api.add_resource(Quiz, '/quiz/<string:channel>')
+api.add_resource(Quiz, '/quiz')
 api.add_resource(Leaderboard, '/leaderboard')
 api.add_resource(User, '/user/<string:userId>')
 

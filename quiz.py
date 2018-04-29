@@ -1,18 +1,40 @@
-quiz_la1 = { 'text': 'Dove sono nati i giochi Olimpici?',
-             'answers': ['Italia', 'Sudafrica', 'Grecia', 'Spagna'],
-             'explanation': 'I primi giochi Olimpici si sono tenuti ad Olimpia nel 776 a.C.',
-             'correct': 3 }
-quiz_la2 = { 'text': 'Nel ciclismo, di che colore è la maglia del vincitore del Tour de France?',
-             'answers': ['Rosa', 'Gialla', 'Verde', 'Bianca'],
-             'explanation': 'La scelta della maglia gialla viene fatta risalire al 1913',
-             'correct': 2 }
-             #frank matana
-
-activeQuizzes = { 'la1': quiz_la1,
-                 'la2': quiz_la2 }
+import sqlite3 as lite
 
 def getQuiz(channel):
-    for quizChannel in activeQuizzes:
-        if quizChannel == channel:
-            return activeQuizes[quizChannel]
-    return None
+    con = lite.connect('RSI.db')
+    with con:
+        cur = con.cursor()
+        cur.execute('SELECT rowid, Question FROM Quiz WHERE Network = ? ORDER BY rowid DESC', (channel,))
+        row = cur.fetchone()
+
+    if row == None: return None
+
+    return { '_id': row[0], 'id': str(row[0]), 'progam': channel, 'text': row[1] }
+
+
+def getAnswersForId(id):
+    con = lite.connect('RSI.db')
+    with con:
+        cur = con.cursor()
+        cur.execute('SELECT A1, A2, A3, A4, CorrectNo FROM Quiz WHERE rowid = ?', (id,))
+        row = cur.fetchone()
+
+    if row == None: return None
+
+    response = []
+    for num, answer in zip(range(4), row):
+        response.append({'_id': num+1, 'id': str(num+1), 'text': answer,
+                         'id_question': str(id), 'correct': num+1 == row[4]})
+
+    return response
+
+def getCorrectForId(id):
+    con = lite.connect('RSI.db')
+    with con:
+        cur = con.cursor()
+        cur.execute('SELECT CorrectNo FROM Quiz WHERE rowid = ?', (id,))
+        row = cur.fetchone()
+
+    if row == None: return None
+
+    return row[0]
