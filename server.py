@@ -46,7 +46,7 @@ class Leaderboard(Resource):
         con = lite.connect('RSI.db')
         with con:
             cur = con.cursor()
-            cur.execute('SELECT Username, Points, Gen_Points FROM User ORDER BY Gen_Points DESC LIMIT 10')
+            cur.execute('SELECT Username, Points, Gen_Points FROM User ORDER BY Points DESC LIMIT 10')
             rows = cur.fetchall()
 
         if rows == None:
