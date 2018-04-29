@@ -28,8 +28,8 @@ polls = [ ['Il surriscaldamento globale rappresenta un problema immediato per la
            'Sì', 'No'] ]
 
 for user in users:
-    user[3] = rnd.randint(0, 5000)
-    user[4] = rnd.randint(0, 1500)
+    user[3] = rnd.randint(0, 1500)
+    user[4] = rnd.randint(0, 5000)
 
 
 con = lite.connect('RSI.db')
